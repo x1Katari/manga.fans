@@ -1,0 +1,4 @@
+Django==4.0.6
+celery==5.2.7
+django-celery-beat==2.3.0
+psycopg2==2.9.3
