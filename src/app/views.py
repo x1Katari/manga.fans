@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
+from .models import Chapter
 
-# Create your views here.
+def index(request):
+    things = Chapter.objects.first()
+    return HttpResponse(f'<h1>{things.pages[0]}</h1>'
+                        f'<h2>{things.pages[1]}</h2>')

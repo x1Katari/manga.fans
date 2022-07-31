@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 
@@ -25,9 +26,12 @@ class Chapter(models.Model):
 
     title_name = models.ForeignKey(Title, on_delete=models.PROTECT, verbose_name='Название комикса')
     number = models.IntegerField(verbose_name='Номер главы')
-    pages = models.TextField(verbose_name='Список спрайтов')
+    pages = ArrayField(models.CharField(max_length=255), blank=True, verbose_name='Список спрайтов')
     added_chapter = models.DateTimeField(verbose_name='Дата добавления', blank=True, null=True)
     available = models.BooleanField(default=True, verbose_name='Доступна')
 
     def __str__(self):
         return str(self.title_name) + str(self.number)
+
+    def some(self):
+        return self.pages
