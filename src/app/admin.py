@@ -1,3 +1,4 @@
+from django_better_admin_arrayfield.admin.mixins import DynamicArrayMixin
 from django.contrib import admin
 from .models import Title, Chapter
 
@@ -41,28 +42,26 @@ class TitleAdmin(admin.ModelAdmin):
 
 
 @admin.register(Chapter)
-class ChapterAdmin(admin.ModelAdmin):
+class ChapterAdmin(admin.ModelAdmin, DynamicArrayMixin):
     model = Chapter
 
     list_display = (
         "id",
         "title_name",
         "number",
-        "pages",
         "available",
         "added_chapter",
     )
 
     list_filter = (
-        "title_name",
         "available",
         "added_chapter",
+        "title_name",
     )
 
     list_editable = (
         "title_name",
         "number",
-        "pages",
         "available",
     )
 
@@ -71,6 +70,12 @@ class ChapterAdmin(admin.ModelAdmin):
         "title_name__name",
         "number",
     )
+
+    prepopulated_fields = {
+        "slug": [
+            "title_name"
+        ]
+    }
 
     date_hierarchy = "added_chapter"
     save_on_top = True
